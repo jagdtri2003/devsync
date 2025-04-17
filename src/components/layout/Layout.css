@@ -1,0 +1,19 @@
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.layout.light {
+  background-color: var(--light-bg);
+  color: var(--light-text);
+}
+
+.layout.dark {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+} 

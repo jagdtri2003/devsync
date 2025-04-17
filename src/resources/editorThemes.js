@@ -1,0 +1,62 @@
+import {
+  abcdef, abyss, androidstudio, andromeda, atomone, aura,
+  basicDark, basicLight, bbedit, bespin, copilot, darcula,
+  dracula, duotoneDark, duotoneLight, eclipse, githubDark,
+  githubLight, gruvboxDark, gruvboxLight, kimbie, material,
+  materialDark, materialLight, monokai, monokaiDimmed,
+  noctisLilac, nord, okaidia, quietlight, red, solarizedDark,
+  solarizedLight, sublime, tokyoNight, tokyoNightDay,
+  tokyoNightStorm, tomorrowNightBlue, vscodeDark,
+  whiteDark, whiteLight, xcodeDark, xcodeLight
+} from "@uiw/codemirror-themes-all";
+
+// 🆓 Free themes
+export const freeThemes = {
+  "GitHub Dark": githubDark,
+  "GitHub Light": githubLight,
+  Dracula: dracula,
+  "Basic Light": basicLight,
+  "Basic Dark": basicDark,
+  Nord: nord,
+  Aura: aura,
+  "VS Code Dark": vscodeDark,
+  "Xcode Dark": xcodeDark,
+  "Xcode Light": xcodeLight,
+  Monokai: monokai,
+  Material: material,
+  "Material Dark": materialDark,
+  "Material Light": materialLight,
+  "Duotone Light": duotoneLight,
+  "Gruvbox Light": gruvboxLight,
+  "Solarized Light": solarizedLight,
+  "White Light": whiteLight,
+}
+
+// 💎 Pro-only themes
+export const proThemes = {
+  Abcdef: abcdef,
+  Abyss: abyss,
+  "Android Studio": androidstudio,
+  Andromeda: andromeda,
+  "Atom One": atomone,
+  BBEdit: bbedit,
+  Bespin: bespin,
+  Copilot: copilot,
+  Darcula: darcula,
+  "Duotone Dark": duotoneDark,
+  Eclipse: eclipse,
+  "Gruvbox Dark": gruvboxDark,
+  Kimbie: kimbie,
+  "Monokai Dimmed": monokaiDimmed,
+  "Noctis Lilac": noctisLilac,
+  Okaidia: okaidia,
+  Quietlight: quietlight,
+  Red: red,
+  "Solarized Dark": solarizedDark,
+  Sublime: sublime,
+  "Tokyo Night": tokyoNight,
+  "Tokyo Night Day": tokyoNightDay,
+  "Tokyo Night Storm": tokyoNightStorm,
+  "Tomorrow Night Blue": tomorrowNightBlue,
+  "White Dark": whiteDark,
+}

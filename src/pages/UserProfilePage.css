@@ -1,0 +1,97 @@
+.user-profile-page {
+  min-height: calc(100vh - 60px);
+  padding: 0;
+}
+
+.custom-profile-page {
+  padding: 20px;
+  max-width: 800px;
+}
+
+.custom-profile-page h1 {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+.subscription-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.subscription-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.dark .subscription-card {
+  background-color: #2a2a3c;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.subscription-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.dark .subscription-header {
+  border-bottom: 1px solid #3a3a4a;
+}
+
+.subscription-header h2 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.badge.free {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.subscription-details {
+  margin-bottom: 20px;
+}
+
+.subscription-details p {
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.subscription-details ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.subscription-details li {
+  padding: 8px 0;
+  position: relative;
+  padding-left: 25px;
+}
+
+.subscription-details li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--success-color);
+  font-weight: bold;
+}
+
+.upgrade-btn {
+  width: 100%;
+  padding: 12px;
+  font-weight: 600;
+} 

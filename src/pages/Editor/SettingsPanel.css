@@ -1,0 +1,133 @@
+.settings-panel {
+  background-color: #1e1e2e;
+  color: #ffffff;
+  height: 100%;
+  padding: 20px;
+  overflow-y: auto;
+  user-select: none;
+  width: 100%;
+}
+
+.settings-title {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  font-weight: 500;
+  text-align: left;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #3a3a4a;
+}
+
+.settings-section {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-section label {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: #b1b1b1;
+  text-align: left;
+}
+
+.settings-select {
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #2a2a3a;
+  color: #ffffff;
+  border: 1px solid #3a3a4a;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.settings-select:hover {
+  border-color: #4a4a5a;
+}
+
+.settings-select:focus {
+  border-color: #6c63ff;
+}
+
+.settings-select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.toggle-section {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Toggle switch styles */
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 22px;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #2a2a3a;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #6c63ff;
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+.slider.round {
+  border-radius: 22px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.reset-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #2a2a3a;
+  color: #ffffff;
+  border: 1px solid #3a3a4a;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.reset-button:hover {
+  background-color: #3a3a4a;
+}
+
+.reset-button:active {
+  background-color: #6c63ff;
+} 
