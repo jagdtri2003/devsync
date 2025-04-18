@@ -350,9 +350,22 @@
   position: relative;
 }
 
-.user-subscription {
-  display: flex;
-  align-items: center;
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  }
 }
 
 .subscription-badge {
@@ -362,4 +375,15 @@
   background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
   color: white;
   font-weight: 600;
-} 
+  white-space: nowrap;
+}
+
+/* Animation based on plan */
+.subscription-badge.pro {
+  animation: shimmer 3s linear infinite;
+  background-size: 400% 100%;
+}
+
+.subscription-badge.team {
+  animation: pulse 2s ease-in-out infinite;
+}

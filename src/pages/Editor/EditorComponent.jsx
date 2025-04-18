@@ -6,7 +6,9 @@ import UsersPanel from './UsersPanel';
 import ChatPanel from './ChatPanel';   
 import { dracula } from '@uiw/codemirror-themes-all';
 import Sidebar from './Sidebar';
-
+import Files from './Files';
+import RunCode from './RunCode';
+import InviteUsers from './InviteUsers';
 function EditorComponent() {
   const [code, setCode] = useState('function sayHi() {\n  console.log("👋 Hello world!");\n}\n\nsayHi()');
   const [theme, setTheme] = useState(dracula);
@@ -14,7 +16,7 @@ function EditorComponent() {
   const [fontSize, setFontSize] = useState(16);
   const [fontFamily, setFontFamily] = useState('monospace');
 
-  const [selectedPanel, setSelectedPanel] = useState(null);
+  const [selectedPanel, setSelectedPanel] = useState('Files');
 
   const togglePanel = (panelName) => {
     setSelectedPanel(prev => (prev === panelName ? null : panelName));
@@ -26,7 +28,7 @@ function EditorComponent() {
       
       {/* Only render the selected panel */}
       <div>
-        {selectedPanel === "settings" && (
+        {selectedPanel === "Settings" && (
           <SettingsPanel
             theme={theme}
             setTheme={setTheme}
@@ -38,9 +40,11 @@ function EditorComponent() {
             setFontFamily={setFontFamily}
           />
         )}
-        {selectedPanel === "users" && <UsersPanel />}
-        {selectedPanel === "chat" && <ChatPanel />}
-        {/* Add other panels like Run, Files, etc */}
+        {selectedPanel === "Users" && <UsersPanel />}
+        {selectedPanel === "Chat" && <ChatPanel />}
+        {selectedPanel === "Files" && <Files />}
+        {selectedPanel === "Run" && <RunCode />}
+        {selectedPanel === "Invite Users" && <InviteUsers />} 
       </div>
 
       <Editor

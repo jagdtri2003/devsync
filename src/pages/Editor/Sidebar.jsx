@@ -3,15 +3,17 @@ import { useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 import { LuFiles,LuMessagesSquare,LuUsers,LuPlay,LuSettings } from "react-icons/lu";
 import { MdKeyboardBackspace } from "react-icons/md";
+import { AiOutlineUsergroupAdd } from "react-icons/ai";
 
 const Sidebar = ({ onSelect, selected }) => {
   const navigate = useNavigate();
   const items = [
-    { name: "files", icon: <LuFiles /> },
-    { name: "chat", icon: <LuMessagesSquare /> },
-    { name: "users", icon: <LuUsers /> },
-    { name: "run", icon: <LuPlay /> },
-    { name: "settings", icon: <LuSettings /> },
+    { name: "Files", icon: <LuFiles /> },
+    { name: "Chat", icon: <LuMessagesSquare /> },
+    { name: "Users", icon: <LuUsers /> },
+    { name: "Run", icon: <LuPlay /> },
+    { name: "Settings", icon: <LuSettings /> }, 
+    { name: "Invite Users", icon: <AiOutlineUsergroupAdd /> },
   ];
 
   return (

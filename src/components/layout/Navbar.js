@@ -45,7 +45,12 @@ const Navbar = () => {
             <div className="user-profile-wrapper">
               {isLoaded && user && (
                 <div className="user-subscription">
-                  <span title={title[user.unsafeMetadata.plan] || "Free Plan"} className="subscription-badge">{user.unsafeMetadata.plan || "Free"}</span>
+                  <span
+                    title={title[user.unsafeMetadata.plan] || "Free Plan"}
+                    className={`subscription-badge ${user.unsafeMetadata.plan?.toLowerCase() || "free"}`}
+                  >
+                    {user.unsafeMetadata.plan || "Free"}
+                  </span>
                 </div>
               )}
               <UserButton>
@@ -57,8 +62,8 @@ const Navbar = () => {
           </SignedIn>
           
           <SignedOut>
-            <Link to="/login" className="btn btn-outline">Log in</Link>
-            <Link to="/signup" className="btn btn-primary">Sign up</Link>
+            <Link to="/login" style={{textDecoration:"none"}} className="btn btn-outline">Log in</Link>
+            <Link to="/signup" style={{textDecoration:"none"}} className="btn btn-primary">Sign up</Link>
           </SignedOut>
         </div>
       </div>
