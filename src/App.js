@@ -111,7 +111,7 @@ function App() {
                   </>
                 } 
               />
-              <Route path="/editor/:id" element={
+              <Route path="/editor" element={
                 <>
                   <SignedIn>
                     <EditorComponent />

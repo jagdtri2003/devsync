@@ -1,11 +1,9 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { FaCopy, FaShare } from 'react-icons/fa'
-import { ThemeContext } from '../../App'
 import { socket } from '../../socket/socket'
 import { useUser } from '@clerk/clerk-react'
 
 function InviteUsers() {
-  const { theme } = useContext(ThemeContext)
   const [inviteLink, setInviteLink] = useState('')
   const [copied, setCopied] = useState(false)
   const [linkGenerated, setLinkGenerated] = useState(false);
@@ -22,6 +20,7 @@ function InviteUsers() {
     setInviteLink(link)
     setLinkGenerated(true)
     socket.emit("joinRoom",{roomId:randomString,user:user.username});
+    sessionStorage.setItem("roomId",randomString);
   }
 
   const copyToClipboard = () => {

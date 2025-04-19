@@ -28,6 +28,7 @@ function EditorComponent() {
   const [messages, setMessages] = useState([]);
 
   const params = useParams();
+  const roomId = params.id || sessionStorage.getItem("roomId");
 
   useEffect(() => {
     socket.on("codeChange", (newCode) => {
@@ -39,16 +40,16 @@ function EditorComponent() {
     socket.on("message",(msgData)=>{
       setMessages(prev=>[...prev,msgData]);
     })
-    if(params.id){
-      const roomId= params.id;
+    if(roomId){
       socket.emit("joinRoom",{roomId,user:user.username});
     }
     return () => {
       socket.off("codeChange");
       socket.off("roomUsersUpdate")
       socket.off("joinRoom")
+      socket.off("message")
     };
-  }, [params.id,user.username]);
+  }, [roomId,user.username]);
 
   const getCode = () => {
     return code;
@@ -56,10 +57,7 @@ function EditorComponent() {
   
   const handleCodeChange = (value) =>{
     setCode(value);
-    if(params.id){
-      const roomId = params.id;
-      socket.emit("codeChange",{roomId,value});
-    }
+    socket.emit("codeChange",{roomId,value});
   }
 
   const togglePanel = (panelName) => {
@@ -68,7 +66,7 @@ function EditorComponent() {
 
   const sendMsg = (message) => {
     const msgData = {message,user:user.username,time:new Date().toLocaleTimeString()};
-    socket.emit('message',{roomId:params.id,message:msgData});
+    socket.emit('message',{roomId,message:msgData});
   }
 
   return (
