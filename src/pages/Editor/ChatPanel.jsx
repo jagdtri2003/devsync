@@ -1,21 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { socket } from '../../socket/socket';
+import { useUser } from '@clerk/clerk-react';
 
-function ChatPanel() {
+function ChatPanel({ sendMsg, messages }) {
   const [message, setMessage] = useState('');
+  const { user } = useUser();
   
   const handleSend = () => {
-    // Implementation for sending message would go here
-    console.log('Sending message:', message);
+    messages.push({message,user:user.username,time:new Date().toLocaleTimeString()});
+    sendMsg(message);
     setMessage('');
   };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (message.trim()) {
+        handleSend();
+      }
+    }
+  };
+
+  useEffect(() => {
+    socket.on('message', (message) => {
+      console.log(message);
+    });
+  }, []);
 
   return (
     <div>
       <h3 className="panel-title">Chat</h3>
       
       <div className="panel-section chat-messages">
-        {/* Chat messages would be displayed here */}
-        <div className="chat-message-placeholder">No messages yet</div>
+        {messages.length > 0 ? (
+          messages.map((msg, index) => {
+            const isCurrentUser = msg.user === user.username;
+            return (
+              <div 
+                key={index} 
+                className={`chat-message ${isCurrentUser ? 'my-message' : 'other-message'}`}
+              >
+                <span className="chat-message-user">{isCurrentUser ? 'You' : msg.user}</span>
+                <span className="chat-message-time">{msg.time}</span>
+                <span className="chat-message-content">{msg.message}</span>
+              </div>
+            );
+          })
+        ) : (
+          <div className="chat-message-placeholder">No messages yet</div>
+        )}
       </div>
       
       <div className="panel-section">
@@ -24,6 +57,7 @@ function ChatPanel() {
           placeholder="Type a message..." 
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
           rows={3}
         />
         <button 

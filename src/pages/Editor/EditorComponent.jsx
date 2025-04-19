@@ -25,6 +25,7 @@ function EditorComponent() {
   const [selectedPanel, setSelectedPanel] = useState('Files');
   const { theme: appTheme } = useContext(ThemeContext);
   const [users, setUsers] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   const params = useParams();
 
@@ -35,6 +36,9 @@ function EditorComponent() {
     socket.on("roomUsersUpdate",(user)=>{
       setUsers(user);
     })
+    socket.on("message",(msgData)=>{
+      setMessages(prev=>[...prev,msgData]);
+    })
     if(params.id){
       const roomId= params.id;
       socket.emit("joinRoom",{roomId,user:user.username});
@@ -44,7 +48,7 @@ function EditorComponent() {
       socket.off("roomUsersUpdate")
       socket.off("joinRoom")
     };
-  }, []);
+  }, [params.id,user.username]);
 
   const getCode = () => {
     return code;
@@ -62,8 +66,13 @@ function EditorComponent() {
     setSelectedPanel(prev => (prev === panelName ? null : panelName));
   };
 
+  const sendMsg = (message) => {
+    const msgData = {message,user:user.username,time:new Date().toLocaleTimeString()};
+    socket.emit('message',{roomId:params.id,message:msgData});
+  }
+
   return (
-    <Split className={`split ${appTheme}`} style={{ height: "100vh" }} sizes={[7, 23, 70]} direction="horizontal" visible={false}>
+    <Split className={`split ${appTheme}`} style={{ height: "100vh" }} sizes={[8, 27, 65]} direction="horizontal" visible={false}>
       <Sidebar onSelect={togglePanel} selected={selectedPanel} />
       
       {/* Only render the selected panel */}
@@ -81,7 +90,7 @@ function EditorComponent() {
           />
         )}
         {selectedPanel === "Users" && <UsersPanel users={users} />}
-        {selectedPanel === "Chat" && <ChatPanel />}
+        {selectedPanel === "Chat" && <ChatPanel sendMsg={sendMsg} messages={messages} />}
         {selectedPanel === "Files" && <Files />}
         {selectedPanel === "Run" && <RunCode getCode={getCode} />}
         {selectedPanel === "Invite Users" && <InviteUsers />} 
