@@ -121,7 +121,16 @@ function App() {
                   </SignedOut>
                 </>
               } />
-              
+              <Route path="/editor/shared/:id" element={
+                <>
+                  <SignedIn>
+                    <EditorComponent />
+                  </SignedIn>
+                  <SignedOut>
+                    <Navigate to="/login" replace />
+                  </SignedOut>
+                </>
+              } />
               {/* 404 Route */}
               <Route path="*" element={<NotFoundPage />} />
             </Routes>

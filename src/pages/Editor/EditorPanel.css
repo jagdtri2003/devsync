@@ -1,0 +1,297 @@
+/* Common styling for all sidebar panels */
+.editor-panel {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+  height: 100vh;
+  padding: 20px;
+  overflow-y: auto;
+  width: 300px;
+  border-right: 1px solid var(--dark-border);
+  transition: all 0.3s ease;
+}
+
+.panel-title {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  font-weight: 500;
+  text-align: left;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+.panel-section {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form elements styling */
+.panel-input, 
+.panel-select,
+.panel-textarea {
+  padding: 8px 12px;
+  border-radius: var(--border-radius);
+  background-color: var(--dark-card-bg);
+  color: var(--dark-text);
+  border: 1px solid var(--dark-border);
+  outline: none;
+  margin-bottom: 12px;
+  transition: border-color 0.3s;
+}
+
+.panel-input:focus, 
+.panel-select:focus,
+.panel-textarea:focus {
+  border-color: var(--secondary-color);
+}
+
+.panel-label {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: #b1b1b1;
+  text-align: left;
+}
+
+.panel-button {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--dark-card-bg);
+  color: var(--dark-text);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.panel-button:hover {
+  background-color: var(--dark-hover);
+}
+
+.panel-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.panel-button.primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.panel-button.primary:hover:not(:disabled) {
+  background-color: var(--secondary-color);
+}
+
+/* Panel placeholder */
+.panel-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #777;
+  font-style: italic;
+}
+
+/* Files Panel specific styles */
+.file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-color: var(--dark-card-bg);
+}
+
+.file-item:hover {
+  background-color: var(--dark-hover);
+}
+
+.file-icon {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.file-name {
+  font-size: 0.9rem;
+}
+
+/* Chat Panel specific styles */
+.chat-messages {
+  flex: 1;
+  min-height: 300px;
+  border-radius: var(--border-radius);
+  background-color: var(--dark-card-bg);
+  padding: 10px;
+  margin-bottom: 15px;
+  overflow-y: auto;
+}
+
+.chat-message-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #777;
+  font-style: italic;
+}
+
+/* Light theme variations */
+.light .editor-panel {
+  background-color: var(--light-bg);
+  color: var(--light-text);
+  border-right: 1px solid var(--light-border);
+}
+
+.light .panel-title {
+  border-bottom: 1px solid var(--light-border);
+}
+
+.light .panel-input, 
+.light .panel-select,
+.light .panel-textarea {
+  background-color: var(--light-card-bg);
+  color: var(--light-text);
+  border: 1px solid var(--light-border);
+}
+
+.light .panel-button {
+  background-color: var(--light-card-bg);
+  color: var(--light-text);
+  border: 1px solid var(--light-border);
+}
+
+.light .panel-button:hover {
+  background-color: var(--light-hover);
+}
+
+.light .panel-button.primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.light .panel-button.primary:hover:not(:disabled) {
+  background-color: var(--secondary-color);
+}
+
+.light .file-item {
+  background-color: var(--light-card-bg);
+}
+
+.light .file-item:hover {
+  background-color: var(--light-hover);
+}
+
+.light .chat-messages {
+  background-color: var(--light-card-bg);
+}
+
+/* Invite Panel specific styles */
+.invite-link-container {
+  margin-bottom: 15px;
+}
+
+.invite-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.panel-warning {
+  background-color: rgba(243, 156, 18, 0.2);
+  color: #f39c12;
+  padding: 12px 16px;
+  border-radius: var(--border-radius);
+  margin-top: 15px;
+  border: 1px solid rgba(243, 156, 18, 0.3);
+}
+
+.panel-warning p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.copy-notification {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--success-color);
+  color: white;
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  z-index: 1000;
+}
+
+/* User Panel specific styles */
+.users-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: var(--border-radius);
+  background-color: var(--dark-card-bg);
+}
+
+.user-status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-status.online {
+  background-color: var(--success-color);
+}
+
+.user-status.offline {
+  background-color: #ccc;
+}
+
+.user-name {
+  font-size: 0.9rem;
+}
+
+/* Light theme variations for new components */
+.light .user-item {
+  background-color: var(--light-card-bg);
+}
+
+.light .panel-warning {
+  background-color: rgba(243, 156, 18, 0.1);
+  color: #856404;
+  border: 1px solid rgba(243, 156, 18, 0.2);
+}
+
+/* Run Code Panel specific styles */
+.code-output {
+  background-color: var(--dark-card-bg);
+  padding: 12px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--dark-border);
+  min-height: 150px;
+  max-height: 300px;
+  overflow-y: auto;
+  font-family: monospace;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.light .code-output {
+  background-color: var(--light-card-bg);
+  border: 1px solid var(--light-border);
+} 

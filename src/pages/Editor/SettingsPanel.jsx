@@ -1,9 +1,8 @@
 import React from 'react';
-import './SettingsPanel.css';
 import { freeThemes, proThemes } from '../../resources/editorThemes';
 import { dracula } from '@uiw/codemirror-themes-all';
 import { useUser } from '@clerk/clerk-react';
-import { freeFonts,proFonts } from '../../resources/Fonts';
+import { freeFonts, proFonts } from '../../resources/Fonts';
 
 function SettingsPanel({ theme, setTheme, language, setLanguage, fontSize, setFontSize, fontFamily, setFontFamily }) {
   // For displaying theme names
@@ -16,7 +15,7 @@ function SettingsPanel({ theme, setTheme, language, setLanguage, fontSize, setFo
     { value: 'css', label: 'CSS' }
   ];
 
-  const fontSizes = [10,12, 14, 16, 18, 20, 24];
+  const fontSizes = [10, 12, 14, 16, 18, 20, 24];
 
   // Helper function to get the current theme name
   const getCurrentThemeName = () => {
@@ -38,75 +37,72 @@ function SettingsPanel({ theme, setTheme, language, setLanguage, fontSize, setFo
   };
 
   return (
-    <div className="settings-panel">
-      <h3 className="settings-title">Settings</h3>
-
-      <div className="settings-section">
-        <label htmlFor="font-family">Font Family</label>
+    <div>
+      <h3 className="panel-title">Settings</h3>
+      
+      <div className="panel-section">
+        <label className="panel-label">Theme</label>
         <select 
-          id="font-family"
-          className="settings-select"
-          value={fontFamily}
-          onChange={(e) => setFontFamily(e.target.value)}
-        >
-          {freeFonts.map(family => (
-            <option key={family} value={family} >{family}</option>
-          ))}
-          {proFonts.map(family => (
-            <option key={family} value={family} disabled={user?.unsafeMetadata?.plan ==='Free'}>{family} {user?.unsafeMetadata?.plan ==='Free' ? '🔒' : ''}</option>
-          ))}
-        </select>
-      </div>
-
-      <div className="settings-section">
-        <label htmlFor="theme">Theme</label>
-        <select 
-          id="theme"
-          className="settings-select"
-          value={getCurrentThemeName()}
+          className="panel-select"
+          value={getCurrentThemeName()} 
           onChange={handleThemeChange}
         >
           {themeNames.map(name => (
-            <option key={name} value={name} disabled={proThemes[name] && user?.unsafeMetadata?.plan ==='Free'}>
-              {name} {proThemes[name] && user?.unsafeMetadata?.plan ==='Free' ? '🔒' : ''}
+            <option key={name} value={name}>
+              {name}
             </option>
           ))}
         </select>
       </div>
 
-      <div className="settings-section">
-        <label htmlFor="language">Language</label>
+      <div className="panel-section">
+        <label className="panel-label">Language</label>
         <select 
-          id="language"
-          className="settings-select"
-          value={language}
+          className="panel-select"
+          value={language} 
           onChange={(e) => setLanguage(e.target.value)}
         >
-          {languages.map(l => (
-            <option key={l.value} value={l.value}>{l.label}</option>
+          {languages.map(lang => (
+            <option key={lang.value} value={lang.value}>
+              {lang.label}
+            </option>
           ))}
         </select>
       </div>
 
-      <div className="settings-section">
-        <label htmlFor="font-size">Font Size</label>
+      <div className="panel-section">
+        <label className="panel-label">Font Size</label>
         <select 
-          id="font-size"
-          className="settings-select"
-          value={fontSize}
+          className="panel-select"
+          value={fontSize} 
           onChange={(e) => setFontSize(Number(e.target.value))}
         >
           {fontSizes.map(size => (
-            <option key={size} value={size}>{size}px</option>
+            <option key={size} value={size}>
+              {size}px
+            </option>
           ))}
         </select>
       </div>
 
-      <button onClick={() => {
-        setTheme(dracula);
-        setLanguage('javascript');
-        setFontSize(16);
-      }} className="reset-button">Reset to default</button>
+      <div className="panel-section">
+        <label className="panel-label">Font Family</label>
+        <select 
+          className="panel-select"
+          value={fontFamily} 
+          onChange={(e) => setFontFamily(e.target.value)}
+        >
+          {Object.entries({...freeFonts, ...proFonts}).map(([name, value]) => (
+            <option key={name} value={value}>
+              {name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <button className="panel-button primary" onClick={() => setTheme(dracula)}>
+        Reset Settings
+      </button>
     </div>
   );
 }

@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Sidebar.css";
-import { LuFiles,LuMessagesSquare,LuUsers,LuPlay,LuSettings } from "react-icons/lu";
+import { LuFiles, LuMessagesSquare, LuUsers, LuPlay, LuSettings } from "react-icons/lu";
 import { MdKeyboardBackspace } from "react-icons/md";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
+import { ThemeContext } from "../../App";
 
 const Sidebar = ({ onSelect, selected }) => {
   const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext);
+  
   const items = [
     { name: "Files", icon: <LuFiles /> },
     { name: "Chat", icon: <LuMessagesSquare /> },
@@ -17,9 +20,13 @@ const Sidebar = ({ onSelect, selected }) => {
   ];
 
   return (
-    <div className="sidebar">
-      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",fontSize:"20px",fontWeight:"bold",padding:"10px",color:"#fff",marginBottom:"20px",cursor:"pointer"}}>
-        <MdKeyboardBackspace title="Dashboard" onClick={() => navigate("/")} />
+    <div className={`sidebar ${theme}`}>
+      <div 
+        className="sidebar-icon" 
+        title="Dashboard" 
+        onClick={() => navigate("/")}
+      >
+        <MdKeyboardBackspace />
       </div>
       {items.map((item, index) => (
         <div

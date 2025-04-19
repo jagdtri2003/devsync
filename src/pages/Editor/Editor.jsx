@@ -17,7 +17,7 @@ function Editor({ value, onChange, theme, language, fontSize,fontFamily }) {
         width='100%'
         theme={theme}
         extensions={getExtensions()}
-        onChange={onChange}
+        onChange={(value, viewUpdate) => onChange(value)}
         style={{ fontSize: `${fontSize}px`  }}
         className={`font-${fontFamily.replace(/\s+/g, '-')}`}
         basicSetup={{

@@ -1,18 +1,27 @@
 import React, { useState, useContext } from 'react'
 import { FaCopy, FaShare } from 'react-icons/fa'
 import { ThemeContext } from '../../App'
+import { socket } from '../../socket/socket'
+import { useUser } from '@clerk/clerk-react'
 
 function InviteUsers() {
   const { theme } = useContext(ThemeContext)
   const [inviteLink, setInviteLink] = useState('')
   const [copied, setCopied] = useState(false)
+  const [linkGenerated, setLinkGenerated] = useState(false);
+  const {user} = useUser();
 
   const generateInviteLink = () => {
+    if(linkGenerated){
+      return;
+    }
     // Generate a random string for the invite link
     const randomString = Math.random().toString(36).substring(2, 15) + 
                          Math.random().toString(36).substring(2, 15)
     const link = `${window.location.origin}/editor/shared/${randomString}`
     setInviteLink(link)
+    setLinkGenerated(true)
+    socket.emit("joinRoom",{roomId:randomString,user:user.username});
   }
 
   const copyToClipboard = () => {
@@ -38,116 +47,56 @@ function InviteUsers() {
   }
 
   return (
-    <div className={`invite-container ${theme}`} style={{ 
-      maxWidth: '450px',
-      margin: '0 auto',
-      padding: '20px'
-    }}>
-      <div className="invite-card card" style={{
-        padding: '20px',
-      }}>
-        <h2 style={{ marginBottom: '16px' }}>Invite Users</h2>
-        
-        <p style={{ marginBottom: '16px' }}>
-          Generate a link to invite others to collaborate on your code.
-        </p>
-        
-        <div style={{ marginBottom: '16px' }}>
-          <button 
-            className="btn btn-primary"
-            onClick={generateInviteLink}
-            style={{
-              width: '100%'
-            }}
-          >
-            Generate Invite Link
-          </button>
-        </div>
-        
-        {inviteLink && (
-          <>
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              marginBottom: '16px',
-              padding: '10px',
-              border: `1px solid ${theme === 'dark' ? 'var(--dark-border)' : 'var(--light-border)'}`,
-              borderRadius: 'var(--border-radius)',
-              backgroundColor: theme === 'dark' ? 'var(--dark-card-bg)' : 'var(--light-card-bg)'
-            }}>
-              <input
-                type="text"
-                readOnly
-                value={inviteLink}
-                style={{
-                  flex: 1,
-                  border: 'none',
-                  padding: '4px',
-                  outline: 'none',
-                  fontSize: '14px',
-                  backgroundColor: 'transparent',
-                  color: theme === 'dark' ? 'var(--dark-text)' : 'var(--light-text)'
-                }}
-              />
-              <button 
-                onClick={copyToClipboard} 
-                style={{
-                  border: 'none',
-                  background: 'none',
-                  cursor: 'pointer',
-                  padding: '4px',
-                  marginLeft: '8px',
-                  color: 'var(--primary-color)'
-                }}
-                title="Copy to clipboard"
-              >
-                <FaCopy />
-              </button>
-              <button 
-                onClick={handleShare} 
-                style={{
-                  border: 'none',
-                  background: 'none',
-                  cursor: 'pointer',
-                  padding: '4px',
-                  marginLeft: '8px',
-                  color: 'var(--primary-color)'
-                }}
-                title="Share link"
-              >
-                <FaShare />
-              </button>
-            </div>
-            
-            <div style={{
-              backgroundColor: theme === 'dark' ? 'rgba(243, 156, 18, 0.2)' : 'var(--warning-color, #f39c12, 0.1)',
-              color: theme === 'dark' ? '#f39c12' : '#856404',
-              padding: '12px 16px',
-              borderRadius: 'var(--border-radius)',
-              marginBottom: '16px',
-              border: `1px solid ${theme === 'dark' ? 'rgba(243, 156, 18, 0.3)' : 'rgba(243, 156, 18, 0.2)'}`
-            }}>
-              <p style={{ fontSize: '14px', margin: 0 }}>
-                <strong>Warning:</strong> Anyone with this link can view and edit your code. Share it only with trusted collaborators.
-              </p>
-            </div>
-          </>
-        )}
+    <div>
+      <h3 className="panel-title">Invite Users</h3>
+      
+      <div className="panel-section">
+        <p>Generate a link to invite others to collaborate on your code.</p>
+        <button 
+          className="panel-button primary"
+          onClick={generateInviteLink}
+        >
+          Generate Invite Link
+        </button>
       </div>
       
+      {inviteLink && (
+        <div className="panel-section">
+          <div className="invite-link-container">
+            <input
+              type="text"
+              className="panel-input"
+              readOnly
+              value={inviteLink}
+            />
+            <div className="invite-actions">
+              <button 
+                onClick={copyToClipboard}
+                className="panel-button"
+                title="Copy to clipboard"
+              >
+                <FaCopy /> Copy
+              </button>
+              <button 
+                onClick={handleShare}
+                className="panel-button"
+                title="Share link"
+              >
+                <FaShare /> Share
+              </button>
+            </div>
+          </div>
+          
+          <div className="panel-warning">
+            <p>
+              <strong>Warning:</strong> Anyone with this link can view and edit your code. Share it only with trusted collaborators.
+            </p>
+          </div>
+        </div>
+      )}
+      
       {copied && (
-        <div style={{
-          position: 'fixed',
-          bottom: '20px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          backgroundColor: 'var(--success-color)',
-          color: 'white',
-          padding: '10px 20px',
-          borderRadius: 'var(--border-radius)',
-          boxShadow: 'var(--shadow)',
-          zIndex: 1000
-        }}>
+        <div className="copy-notification">
           Link copied to clipboard!
         </div>
       )}
