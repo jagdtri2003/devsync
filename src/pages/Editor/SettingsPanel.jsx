@@ -1,13 +1,11 @@
 import React from 'react';
 import { freeThemes, proThemes } from '../../resources/editorThemes';
 import { dracula } from '@uiw/codemirror-themes-all';
-import { useUser } from '@clerk/clerk-react';
 import { freeFonts, proFonts } from '../../resources/Fonts';
 
 function SettingsPanel({ theme, setTheme, language, setLanguage, fontSize, setFontSize, fontFamily, setFontFamily }) {
   // For displaying theme names
   const themeNames = Object.keys({...freeThemes, ...proThemes});
-  const { user } = useUser();
   
   const languages = [
     { value: 'javascript', label: 'JavaScript' },
@@ -92,8 +90,8 @@ function SettingsPanel({ theme, setTheme, language, setLanguage, fontSize, setFo
           value={fontFamily} 
           onChange={(e) => setFontFamily(e.target.value)}
         >
-          {Object.entries({...freeFonts, ...proFonts}).map(([name, value]) => (
-            <option key={name} value={value}>
+          {[...freeFonts, ...proFonts].map((name) => (
+            <option key={name} value={name}>
               {name}
             </option>
           ))}

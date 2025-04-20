@@ -21,13 +21,14 @@ export const ThemeContext = createContext();
 const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY || "pk_test_placeholder-key";
 
 function App() {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   
   // Toggle theme between light and dark
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
     document.body.className = newTheme;
+    localStorage.setItem('theme', newTheme);
   };
   
   return (

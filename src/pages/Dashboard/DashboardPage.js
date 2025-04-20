@@ -145,7 +145,7 @@ const DashboardPage = () => {
               filteredProjects.map(project => (
                 <div className="project-card" key={project.id}>
                   <div className="project-header">
-                    <h3 className="project-name" onClick={() => navigate(`/editor/${project.id}`)}>
+                    <h3 className="project-name" onClick={() => navigate(`/editor`)}>
                       {project.name}
                     </h3>
                     <div className="project-language">
@@ -170,7 +170,7 @@ const DashboardPage = () => {
                   </div>
                   
                   <div className="project-actions">
-                    <button className="btn btn-primary" onClick={() => navigate(`/editor/${project.id}`)}>
+                    <button className="btn btn-primary" onClick={() => navigate(`/editor`)}>
                       Open Project
                     </button>
                     <button className="btn btn-outline">

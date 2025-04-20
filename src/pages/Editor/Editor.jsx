@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
+import { socket } from '../../socket/socket';
 
 function Editor({ value, onChange, theme, language, fontSize,fontFamily }) {
-  // Fix for the theme extension error
   const getExtensions = () => {
-    // Always include JavaScript extension as the default
     return [javascript()];
   };
+  useEffect(() => {
+    socket.on('requestCodeSync', ({toSocketId}) => {
+      socket.emit("codeSync",{to:toSocketId,value})
+    });
+    return () => {
+      socket.off('requestCodeSync');
+    };
+  }, [value]);
 
   return (
     <div className="editor-container" style={{ minHeight: '100%', width: '100%', overflow: 'auto' }}>
