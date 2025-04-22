@@ -2,10 +2,21 @@ import React from 'react';
 import { freeThemes, proThemes } from '../../resources/editorThemes';
 import { dracula } from '@uiw/codemirror-themes-all';
 import { freeFonts, proFonts } from '../../resources/Fonts';
+import { useUser } from '@clerk/clerk-react';
 
 function SettingsPanel({ theme, setTheme, language, setLanguage, fontSize, setFontSize, fontFamily, setFontFamily }) {
-  // For displaying theme names
-  const themeNames = Object.keys({...freeThemes, ...proThemes});
+  const { user, isLoaded } = useUser();
+  const isPro = isLoaded && user && (user.unsafeMetadata.plan === 'Pro' || user.unsafeMetadata.plan === 'Team');
+  
+  // Get all theme and font names, but we'll control which ones can be selected
+  const allThemeNames = Object.keys({...freeThemes, ...proThemes});
+  const allFontNames = [...freeFonts, ...proFonts];
+  
+  // Helper function to check if a theme is a pro theme
+  const isProTheme = (name) => Object.keys(proThemes).includes(name);
+  
+  // Helper function to check if a font is a pro font
+  const isProFont = (name) => proFonts.includes(name);
   
   const languages = [
     { value: 'javascript', label: 'JavaScript' },
@@ -17,15 +28,33 @@ function SettingsPanel({ theme, setTheme, language, setLanguage, fontSize, setFo
 
   // Helper function to get the current theme name
   const getCurrentThemeName = () => {
-    return Object.entries({...freeThemes, ...proThemes}).find(
+    const currentThemeName = Object.entries({...freeThemes, ...proThemes}).find(
       ([_, themeObj]) => themeObj === theme
     )?.[0] || 'Dracula';
+    
+    // If current theme is a pro theme but user is on free plan, reset to default
+    if (!isPro && isProTheme(currentThemeName)) {
+      // Reset to a free theme
+      setTheme(freeThemes.Dracula || Object.values(freeThemes)[0]);
+      return 'Dracula';
+    }
+    
+    return currentThemeName;
   };
 
   // Handle theme change
   const handleThemeChange = (e) => {
     const selectedThemeName = e.target.value;
-    const selectedTheme = {...freeThemes, ...proThemes}[selectedThemeName];
+    
+    // Prevent selecting pro themes for free users
+    if (!isPro && isProTheme(selectedThemeName)) {
+      return;
+    }
+    
+    const selectedTheme = isPro 
+      ? {...freeThemes, ...proThemes}[selectedThemeName]
+      : freeThemes[selectedThemeName];
+      
     if (selectedTheme) {
       setTheme(selectedTheme);
     } else {
@@ -33,6 +62,25 @@ function SettingsPanel({ theme, setTheme, language, setLanguage, fontSize, setFo
       setTheme(dracula);
     }
   };
+
+  // Handle font change
+  const handleFontChange = (e) => {
+    const selectedFont = e.target.value;
+    
+    // Prevent selecting pro fonts for free users
+    if (!isPro && isProFont(selectedFont)) {
+      return;
+    }
+    
+    setFontFamily(selectedFont);
+  };
+
+  // Check if current font family is a pro font and user is on free plan
+  React.useEffect(() => {
+    if (!isPro && isProFont(fontFamily)) {
+      setFontFamily(freeFonts[0] || 'monospace');
+    }
+  }, [isPro, fontFamily, setFontFamily]);
 
   return (
     <div>
@@ -45,12 +93,21 @@ function SettingsPanel({ theme, setTheme, language, setLanguage, fontSize, setFo
           value={getCurrentThemeName()} 
           onChange={handleThemeChange}
         >
-          {themeNames.map(name => (
-            <option key={name} value={name}>
-              {name}
+          {allThemeNames.map(name => (
+            <option 
+              key={name} 
+              value={name}
+              disabled={!isPro && isProTheme(name)}
+            >
+              {!isPro && isProTheme(name) ? `🔒 ${name} (Pro)` : name}
             </option>
           ))}
         </select>
+        {!isPro && (
+          <div className="pro-feature-lock">
+            <span>Upgrade to Pro plan to unlock premium themes</span>
+          </div>
+        )}
       </div>
 
       <div className="panel-section">
@@ -88,14 +145,23 @@ function SettingsPanel({ theme, setTheme, language, setLanguage, fontSize, setFo
         <select 
           className="panel-select"
           value={fontFamily} 
-          onChange={(e) => setFontFamily(e.target.value)}
+          onChange={handleFontChange}
         >
-          {[...freeFonts, ...proFonts].map((name) => (
-            <option key={name} value={name}>
-              {name}
+          {allFontNames.map((name) => (
+            <option 
+              key={name} 
+              value={name}
+              disabled={!isPro && isProFont(name)}
+            >
+              {!isPro && isProFont(name) ? `🔒 ${name} (Pro)` : name}
             </option>
           ))}
         </select>
+        {!isPro && (
+          <div className="pro-feature-lock">
+            <span>Upgrade to Pro plan to unlock premium fonts</span>
+          </div>
+        )}
       </div>
 
       <button className="panel-button primary" onClick={() => setTheme(dracula)}>

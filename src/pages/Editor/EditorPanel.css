@@ -373,4 +373,43 @@
 .light .code-output {
   background-color: var(--light-card-bg);
   border: 1px solid var(--light-border);
+}
+
+/* Pro feature lock styling */
+.pro-feature-lock {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: var(--border-radius);
+  background-color: rgba(255, 152, 0, 0.15);
+  border: 1px dashed rgba(255, 152, 0, 0.5);
+  margin-bottom: 12px;
+  height: 36px;
+}
+
+.pro-feature-lock span {
+  font-size: 0.85rem;
+  color: #ff9800;
+}
+
+/* Styling for disabled/locked options in select dropdowns */
+.panel-select option:disabled {
+  color: #888;
+  background-color: #f1f1f1;
+}
+
+.dark .panel-select option:disabled {
+  color: #888;
+  background-color: #333;
+}
+
+/* Light theme variations */
+.light .pro-feature-lock {
+  background-color: rgba(255, 152, 0, 0.1);
+  border: 1px dashed rgba(255, 152, 0, 0.3);
+}
+
+.light .pro-feature-lock span {
+  color: #e67e00;
 } 
